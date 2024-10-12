@@ -1,7 +1,6 @@
 import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import ErrorComponent from './components/ErrorComponent';
-import App from './App';
 import Root from './Root';
 
 
@@ -19,5 +18,6 @@ const Router = createBrowserRouter([
         ]
     }
 ])
+
 
 export default Router;
