@@ -2,8 +2,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Cards from './components/Cards';
 import styled from 'styled-components';
-import { Container, Navbar } from 'react-bootstrap';
-
+import { Container, Nav, Navbar } from 'react-bootstrap';
+import Header from './components/Header';
 
 const AppContainer = styled.div`
   display: flex;
@@ -20,11 +20,7 @@ const CardWrapper = styled.div`
 function App() {
   return (
     <div className="App">
-      <Navbar bg="dark" variant="dark">
-        <Container>
-          <Navbar.Brand href="#home">영어 학습 도우미</Navbar.Brand>
-        </Container>
-      </Navbar>
+      <Header />
       <AppContainer>
         <CardWrapper>
           <Cards bg="dark" textColor="white" img="/img/translator.jpg" title="영문 번역" body="문장 또는 내용이 영어라서 어렵다면? 영어 번역 기능을 사용하여 영어를 번역해보세요."/>
