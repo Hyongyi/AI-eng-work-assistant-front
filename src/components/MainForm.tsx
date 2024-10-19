@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Button, Container, Form, InputGroup, Navbar } from 'react-bootstrap';
 import Header from './Header';
 import styled from 'styled-components';
+import MainSentence from './MainSentence';
 
 const StyledInputGroup = styled(InputGroup)`
     box-shadow: 4px 4px 10px rgba(118, 118, 118, 0.2);
@@ -14,20 +15,65 @@ const StyledInputGroup = styled(InputGroup)`
     }
 `
 
+const MainForm = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+`;
 
-function Test(){
+interface RestApiProps {
+    endpoint: string; 
+}
+
+interface ApiResponse {
+    translatedText: string; 
+}
+
+const BASE_URL = process.env.REACT_APP_BASE_URL;
+
+
+const Test: React.FC<RestApiProps> = ({endpoint}) => {
 
     const [prompt, setPrompt] = useState<string>("");
-    const [answer, getAnswer] = useState<string>("");
+    const [answer, setAnswer] = useState<string>("");
 
     const PromptOnChange = (e:React.ChangeEvent<HTMLTextAreaElement>) =>{
         setPrompt(e.target.value);
     } 
 
+    const CallRestApi = async () => {
+        const data = await fetchData('/translate');
+        setAnswer(data.translatedText);
+    };
+
+
+    const fetchData = async (endpoint: string) => {
+        try {
+            const response = await fetch(`${BASE_URL}${endpoint}`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ text: prompt }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('네트워크 응답이 좋지 않습니다.');
+            }
+    
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error('데이터를 가져오는 중 오류 발생:', error);
+        }
+    };
+
     return (
         <>
             <Header />
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh'}}>
+            <MainSentence text = "영어 번역기를 이용하여 <br/>자연스러운 한영, 영한 번역을 경험해 보세요" />
+            <MainForm>
                 <StyledInputGroup style={{ width: '35%', margin: '0 50px', height:'40vh' }}>
                     <Form.Control
                     as="textarea"
@@ -42,10 +88,10 @@ function Test(){
                 <StyledInputGroup style={{ width: '35%', margin: '0 50px', height:'40vh'  }}>
                     <Form.Control
                     as="textarea"
-                    value={answer}
+                    value = {answer}
                     />
                 </StyledInputGroup>
-            </div>
+            </MainForm>
         </>
       );
 }
