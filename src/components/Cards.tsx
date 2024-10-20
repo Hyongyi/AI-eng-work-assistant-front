@@ -2,6 +2,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
 
 interface CardsProps {
   bg: string; 
@@ -9,9 +10,10 @@ interface CardsProps {
   img : string;
   title : string;
   body : string;
+  url : string;
 }
 
-const Cards: React.FC<CardsProps> = ({ bg, textColor, img, title, body }) => {
+const Cards: React.FC<CardsProps> = ({ bg, textColor, img, title, body, url }) => {
   return (
     <Card style={{ width: '20rem', borderRadius:'17px'}} bg={bg} text={textColor}> {/* 배경색 설정 */}
       <Card.Img variant="top" src={img} style={{ borderRadius:'15px 15px 0 0'}}/>
@@ -20,7 +22,9 @@ const Cards: React.FC<CardsProps> = ({ bg, textColor, img, title, body }) => {
         <Card.Text>
             {body}
         </Card.Text>
-        <Button variant="primary">{title}</Button>
+        <Link to={url}> {/* Link로 버튼 감싸기 */}
+          <Button variant="primary">{title}</Button>
+        </Link>
       </Card.Body>
     </Card>
   );
