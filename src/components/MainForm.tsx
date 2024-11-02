@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Button, Container, Form, InputGroup, Navbar, Spinner } from 'react-bootstrap';
+import { Button, Container, Form, InputGroup, Modal, Navbar, Spinner } from 'react-bootstrap';
 import Header from './Header';
 import styled from 'styled-components';
 import MainSentence from './MainSentence';
@@ -36,27 +36,56 @@ const Test: React.FC<MainFormProps> = ({template, sentence}) => {
     const [answer, setAnswer] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
 
-    const PromptOnChange = (e:React.ChangeEvent<HTMLTextAreaElement>) =>{
-        setPrompt(e.target.value);
-    } 
+    // const PromptOnChange = (e:React.ChangeEvent<HTMLTextAreaElement>) =>{
+    //     setPrompt(e.target.value);
+    // } 
 
-    const CallRestApi = async () => {
-        setLoading(true); 
-        const data = await fetchData(template);
-        const responseString = data.response; 
-        const words = responseString.split(' ');
-        for (let i = 0; i < words.length; i++) {
-            setTimeout(() => {
-                setAnswer(prev => prev + (i === 0 ? '' : ' ') + words[i]); // 이전 내용에 현재 단어 추가
-            }, i * 100);  // 500ms 간격으로 업데이트
-        }
+    // const CallRestApi = async () => {
+    //     setLoading(true); 
+    //     const data = await fetchData(template);
+    //     const responseString = data.response; 
+    //     const words = responseString.split(' ');
+    //     for (let i = 0; i < words.length; i++) {
+    //         setTimeout(() => {
+    //             setAnswer(prev => prev + (i === 0 ? '' : ' ') + words[i]); // 이전 내용에 현재 단어 추가
+    //         }, i * 100);  // 500ms 간격으로 업데이트
+    //     }
+    // };
+
+
+    // const fetchData = async (template: string) => {
+    //     try {
+    //         const response = await fetch(`${BASE_URL}/callAI`, {
+    //             method: "POST",
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({ 'promptTemplate': template, 'sentence': prompt }),
+    //         });
+    
+    //         if (!response.ok) {
+    //             throw new Error('네트워크 응답이 좋지 않습니다.');
+    //         }
+    
+    //         const data = await response.json();
+    //         return data;
+    //     } catch (error) {
+    //         console.error('데이터를 가져오는 중 오류 발생:', error);
+    //     } finally{
+    //         setLoading(false);
+    //     }
+    // };
+    const PromptOnChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setPrompt(e.target.value);
     };
 
-
-    const fetchData = async (template: string) => {
+    const CallRestApi = async () => {
+        setAnswer("");
+        setLoading(true);
+        
         try {
             const response = await fetch(`${BASE_URL}/callAI`, {
-                method: "POST",
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -64,17 +93,38 @@ const Test: React.FC<MainFormProps> = ({template, sentence}) => {
             });
     
             if (!response.ok) {
-                throw new Error('네트워크 응답이 좋지 않습니다.');
+                const errorDetails = await response.json();
+                throw new Error(`서버 오류: ${errorDetails.detail || '알 수 없는 오류'}`);
             }
     
-            const data = await response.json();
-            return data;
+            if (response.body) {
+                
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder('utf-8');
+    
+                let result = ""; // 전체 결과를 저장할 변수
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+    
+                    const chunk = decoder.decode(value, { stream: true });
+                    result += chunk;
+                    setLoading(false);
+                    // 결과를 업데이트하는 비동기 작업
+                    setAnswer((prev) => prev + chunk + ' ');
+                    await new Promise(resolve => setTimeout(resolve, 0.1)); // 약간의 지연 추가
+                }
+            } else {
+                throw new Error('응답 본체가 없습니다.');
+            }
         } catch (error) {
-            console.error('데이터를 가져오는 중 오류 발생:', error);
-        } finally{
+            console.error('API 호출 오류:', error);
+        } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <>
@@ -96,21 +146,17 @@ const Test: React.FC<MainFormProps> = ({template, sentence}) => {
                     <Form.Control
                     as="textarea"
                     value = {answer}
+                    readOnly 
                     />
                 </StyledInputGroup>
-                {loading && (
-                    <div style={{
-                        position: 'fixed',  // 절대 위치
-                        top: '50%',        // 세로 중앙
-                        left: '50%',       // 가로 중앙
-                        transform: 'translate(-50%, -50%)', // 중앙 정렬
-                        zIndex: 1000       // 다른 요소 위에 표시
-                    }}>
+                <Modal show={loading} backdrop="static" centered>
+                    <Modal.Body className="text-center">
                         <Spinner animation="border" role="status">
                             <span className="visually-hidden">Loading...</span>
                         </Spinner>
-                    </div>
-                )}
+                        <p>로딩 중입니다...</p>
+                    </Modal.Body>
+                </Modal>
             </MainForm>
         </>
       );
