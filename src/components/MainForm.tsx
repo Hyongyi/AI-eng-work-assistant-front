@@ -112,7 +112,7 @@ const Test: React.FC<MainFormProps> = ({template, sentence}) => {
                     result += chunk;
                     setLoading(false);
                     // 결과를 업데이트하는 비동기 작업
-                    setAnswer((prev) => prev + chunk + ' ');
+                    setAnswer((prev) => prev + chunk);
                     await new Promise(resolve => setTimeout(resolve, 0.1)); // 약간의 지연 추가
                 }
             } else {
@@ -146,6 +146,7 @@ const Test: React.FC<MainFormProps> = ({template, sentence}) => {
                     <Form.Control
                     as="textarea"
                     value = {answer}
+                    placeholder="답변이 여기에 출력됩니다."
                     readOnly 
                     />
                 </StyledInputGroup>
