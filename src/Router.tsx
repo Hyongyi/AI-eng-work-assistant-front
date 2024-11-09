@@ -4,6 +4,7 @@ import ErrorComponent from './components/ErrorComponent';
 import Root from './Root';
 import MainForm from './components/MainForm';
 import App from './App';
+import Word from './components/Word';
 
 
 
@@ -30,6 +31,11 @@ const Router = createBrowserRouter([
             {
                 path:"/summary",
                 element : <MainForm template='summary_template' sentence='AI 영어 요약 기능을 이용하여 <br />논문, 기사 등을 요약하여 받아보세요.' />,
+                errorElement: <ErrorComponent />
+            },
+            {
+                path:"/vocaRecommend",
+                element : <Word template='eng_word_template' sentence=''/>,
                 errorElement: <ErrorComponent />
             }
         ]
