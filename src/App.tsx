@@ -33,7 +33,7 @@ function App() {
           <Cards bg="dark" textColor="white" img="/img/summary.jpg" title="영문 요약 및 설명" body="복잡하고 긴 영어 문장을 요약하여 보고 싶을 땐, 영문 요약 및 설명 기능을 사용해보세요." url='/summary' />
         </CardWrapper>
         <CardWrapper>
-          <Cards bg="dark" textColor="white" img="/img/voca.jpg" title="영단어 추천" body="여러분의 영어 실력을 높이고 싶다면 영어 단어 공부는 필수! 영단어 추천을 통해 영어 실력을 높여보세요." url='/grammar-check' />
+          <Cards bg="dark" textColor="white" img="/img/voca.jpg" title="영단어 공부" body="여러분의 영어 실력을 높이고 싶다면 영어 단어 공부는 필수! 단어 공부를 통해 영어 실력을 높여보세요." url='/grammar-check' />
         </CardWrapper>
       </AppContainer>
     </div>

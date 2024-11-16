@@ -6,8 +6,6 @@ import MainForm from './components/MainForm';
 import App from './App';
 import Word from './components/Word';
 
-
-
 const Router = createBrowserRouter([
     {
         path:"/",

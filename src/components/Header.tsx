@@ -20,7 +20,7 @@ function Header(){
                     <StyledNavLink href="/translate">영문 번역</StyledNavLink>
                     <StyledNavLink href="/grammar-check">작문 교정</StyledNavLink>
                     <StyledNavLink href="/summary">영문 요약</StyledNavLink>
-                    <StyledNavLink href="/vocaRecommend">영단어 추천</StyledNavLink>
+                    <StyledNavLink href="/vocaRecommend">영단어 공부</StyledNavLink>
                 </Nav>
             </Container>
         </Navbar>
