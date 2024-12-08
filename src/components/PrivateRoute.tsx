@@ -12,7 +12,7 @@ const PrivateRoute: React.FC<{ element: JSX.Element }> = ({ element }) => {
       alert('로그인이 필요한 서비스입니다.');
       navigate("/", { replace: true });
     }
-  }, [token, navigate]);  // 의존성 배열에 navigate 추가
+  }, [token, navigate]); 
 
   // 인증된 사용자에게만 해당 element를 렌더링
   if (!token) {

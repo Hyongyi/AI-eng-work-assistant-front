@@ -6,6 +6,7 @@ const SentenceContainer = styled.div`
     margin-top: 100px;
 `;
 
+// 기능별 상단 문구 그려주는 모듈
 const MainSentence: React.FC<{ text: string }> = ({ text }) => {
     return (
         <SentenceContainer>

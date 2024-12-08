@@ -22,18 +22,18 @@ const Voca = styled.h1`
 `;
 
 const CardContainer = styled.div`
-  perspective: 1000px; /* 3D 효과를 위한 원근 설정 */
+  perspective: 1000px; 
 `;
 
 const FlipCard = styled.div`
   width: 18rem;
-  height: 25rem;  /* 카드 높이 설정 */
-  transition: transform 0.6s ease; /* 회전 애니메이션 */
+  height: 25rem; 
+  transition: transform 0.6s ease;
   transform-style: preserve-3d;
   cursor: pointer;
 
   &:hover {
-    transform: rotateY(180deg); /* 마우스를 올리면 카드가 180도 회전 */
+    transform: rotateY(180deg); 
   }
 `;
 
@@ -41,7 +41,7 @@ const CardFace = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden; /* 회전 시 뒷면이 보이지 않도록 */
+  backface-visibility: hidden; 
   padding: 1rem;
   border: 1px solid #ddd;
   background-color: #fff;
@@ -52,7 +52,6 @@ const CardFace = styled.div`
 `;
 
 const CardFront = styled(CardFace)`
-  /* 카드 앞면 스타일 */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -60,9 +59,8 @@ const CardFront = styled(CardFace)`
 `;
 
 const CardBack = styled(CardFace)`
-  /* 카드 뒷면 스타일 */
   background-color: #f8f9fa;
-  transform: rotateY(180deg); /* 뒤집어진 상태로 시작 */
+  transform: rotateY(180deg); 
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -89,12 +87,13 @@ const CardText = styled.p`
   flex-grow: 1;
 `;
 
+// API를 Call해서 Random 단어를 가져오고 카드 형태로 그려주는 모듈
 const Word: React.FC<MainFormProps> = ({ template, sentence }) => {
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
-  // 랜덤 단어 가져오는 함수
-  const fetchWords = async () => {
+  // 백단 파이썬 쪽 API호출해서 랜덤 단어 가져오는 함수
+  const getRandomWord = async () => {
     setLoading(true);
     try {
       const response = await fetch(`${BASE_URL}/callAI`, {
@@ -102,7 +101,7 @@ const Word: React.FC<MainFormProps> = ({ template, sentence }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ promptTemplate: template, sentence: sentence }),
+        body: JSON.stringify({ 'promptTemplate': template, 'sentence': sentence}),
       });
 
       if (!response.ok) {
@@ -122,7 +121,7 @@ const Word: React.FC<MainFormProps> = ({ template, sentence }) => {
   };
 
   useEffect(() => {
-    fetchWords();  // 컴포넌트가 마운트될 때 단어를 가져옴
+    getRandomWord(); 
   }, []);
 
   return (
@@ -133,7 +132,7 @@ const Word: React.FC<MainFormProps> = ({ template, sentence }) => {
         {loading ? (
           <p>단어를 불러오는 중...</p>
         ) : (
-          data && ( // 데이터가 존재할 경우 카드에 데이터를 바인딩
+          data && ( 
             <CardContainer>
               <FlipCard>
                 <CardFront>
@@ -157,7 +156,7 @@ const Word: React.FC<MainFormProps> = ({ template, sentence }) => {
             </CardContainer>
           )
         )}
-        <Button variant="primary" onClick={fetchWords}>새로운 단어 가져오기</Button>
+        <Button variant="primary" onClick={getRandomWord}>새로운 단어 가져오기</Button>
       </MainForm>
       <Modal show={loading} backdrop="static" centered>
         <Modal.Body className="text-center">

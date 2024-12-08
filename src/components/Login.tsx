@@ -3,16 +3,17 @@ import { Button, Form, Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from './AuthContext'; // useAuth 사용하여 로그인 상태 관리
 
-interface LoginProps {
+export interface ModalProps {
   onClose: () => void; // 모달 닫기 함수
 }
+const BASE_URL = process.env.REACT_APP_BASE_URL;
 
-const Login: React.FC<LoginProps> = ({ onClose }) => {
+const Login: React.FC<ModalProps> = ({ onClose }) => {
   const [id, setId] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [successMessage, setSuccessMessage] = useState<string>('');
-  const { login } = useAuth(); // 로그인 상태를 관리하는 함수
+  const { login } = useAuth(); 
 
   const navigate = useNavigate();
 
@@ -25,7 +26,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/login', {
+      const response = await fetch(`${BASE_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ const Login: React.FC<LoginProps> = ({ onClose }) => {
 
       if (response.ok) {
         localStorage.setItem('jwt', data.access_token); // JWT 토큰 저장
-        login(); // 로그인 상태 변경
+        login(data.access_token, data.userAge.toString()); // 로그인 상태 변경
 
         setSuccessMessage('로그인 성공');
         setErrorMessage('');

@@ -5,9 +5,9 @@ import Root from './Root';
 import MainForm from './components/MainForm';
 import App from './App';
 import Word from './components/Word';
-import Signup from './components/Signup';
 import PrivateRoute from './components/PrivateRoute';  // PrivateRoute 컴포넌트 가져오기
 
+// Rourter처리
 const Router = createBrowserRouter([
   {
     path: "/",

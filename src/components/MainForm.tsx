@@ -7,11 +7,10 @@ import MainSentence from './MainSentence';
 
 const StyledInputGroup = styled(InputGroup)`
     box-shadow: 4px 4px 10px rgba(118, 118, 118, 0.2);
-    border-radius: 8px; /* 전체 InputGroup에 border-radius 추가 */
+    border-radius: 8px;
 
-/* InputControl에 border-radius 추가 */
     .form-control {
-    border-radius: 8px; /* 같은 값을 적용하거나 원하는 값으로 조정 */
+    border-radius: 8px;
     }
 `
 
@@ -30,6 +29,7 @@ export interface MainFormProps {
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
 
+//번역, 교정, 요약 화면을 그리고 백단 파이썬 API를 Streaming형태로 출력하는 모듈
 const Test: React.FC<MainFormProps> = ({template, sentence}) => {
 
     const [prompt, setPrompt] = useState<string>("");
@@ -40,7 +40,7 @@ const Test: React.FC<MainFormProps> = ({template, sentence}) => {
         setPrompt(e.target.value);
     };
 
-    //Python 백엔드 restapi를 호출하고 Streaming으로 출력하는 함수 
+    //파이썬 백단 API를 호출하고 Streaming으로 출력하는 함수 
     const CallRestApi = async () => {
         setAnswer("");
         setLoading(true);
@@ -51,7 +51,7 @@ const Test: React.FC<MainFormProps> = ({template, sentence}) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ 'promptTemplate': template, 'sentence': prompt }),
+                body: JSON.stringify({ 'promptTemplate': template, 'sentence': prompt , 'userAge': localStorage.getItem('userAge')}),
             });
     
             if (!response.ok) {
@@ -60,12 +60,10 @@ const Test: React.FC<MainFormProps> = ({template, sentence}) => {
             }
     
             if (response.body) {
-                
 
                 const reader = response.body.getReader();
                 const decoder = new TextDecoder('utf-8');
-    
-                
+
                 while (true) {
                     const { done, value } = await reader.read();
                     if (done) break;
@@ -74,9 +72,8 @@ const Test: React.FC<MainFormProps> = ({template, sentence}) => {
                     
                     setLoading(false);
                     
-                    // 결과를 업데이트하는 비동기 작업
                     setAnswer((prev) => prev + chunk);
-                    await new Promise(resolve => setTimeout(resolve, 0.1)); // 약간의 지연 추가
+                    await new Promise(resolve => setTimeout(resolve, 0.1)); 
                 }
             } else {
                 throw new Error('응답 본체가 없습니다.');

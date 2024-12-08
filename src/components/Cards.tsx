@@ -13,6 +13,7 @@ interface CardsProps {
   url : string;
 }
 
+//홈 화면에 카드를 그리는 모듈
 const Cards: React.FC<CardsProps> = ({ bg, textColor, img, title, body, url }) => {
   return (
     <Card style={{ width: '20rem', borderRadius:'17px'}} bg={bg} text={textColor}> {/* 배경색 설정 */}
@@ -22,7 +23,7 @@ const Cards: React.FC<CardsProps> = ({ bg, textColor, img, title, body, url }) =
         <Card.Text>
             {body}
         </Card.Text>
-        <Link to={url}> {/* Link로 버튼 감싸기 */}
+        <Link to={url}>
           <Button variant="primary">{title}</Button>
         </Link>
       </Card.Body>

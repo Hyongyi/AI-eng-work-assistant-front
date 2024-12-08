@@ -2,7 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  login: () => void;
+  login: (access_token:string, useAge:string) => void;
   logout: () => void;
 }
 
@@ -24,12 +24,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (token) {
-      setIsLoggedIn(true); // 로그인된 상태
+      setIsLoggedIn(true); 
     }
   }, []);
 
-  const login = () => {
-    localStorage.setItem('jwt', 'your-jwt-token'); // 로그인 시 JWT 저장
+  const login = (token:string, userAge:string) => {
+    localStorage.setItem('jwt', token); // 로그인 시 JWT 저장
+    localStorage.setItem('userAge', userAge)
     setIsLoggedIn(true);
   };
 

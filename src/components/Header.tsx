@@ -33,8 +33,10 @@ const LoginModal = styled(Modal)`
   }
 `;
 
+//회원가입과 로그인 모달을 구분하기 위한 처리
 const SignUpModal = styled(LoginModal)``;
 
+//화면 최상단 Header를 그리는 
 const Header: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
@@ -42,14 +44,13 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    logout(); // AuthContext에서 상태 변경
-    navigate('/'); // 네비게이션 처리
+    logout(); 
+    navigate('/'); 
   };
 
 
   const handleShowLoginModal = () => setShowLoginModal(true);
   const handleCloseLoginModal = () => setShowLoginModal(false);
-
   const handleShowSignupModal = () => setShowSignupModal(true);
   const handleCloseSignupModal = () => setShowSignupModal(false);
 
@@ -107,7 +108,7 @@ const Header: React.FC = () => {
           <Modal.Title>회원가입</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Signup />
+          <Signup onClose={handleCloseSignupModal} />
         </Modal.Body>
       </SignUpModal>
     </>
