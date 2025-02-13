@@ -17,7 +17,6 @@ const CardWrapper = styled.div`
   margin: 30px; 
 `;
 
-
 function App() {
   return (
     <div className="App">
