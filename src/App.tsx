@@ -11,6 +11,7 @@ const AppContainer = styled.div`
   justify-content: center; 
   padding: 10px; 
   margin-top : 150px;
+  margin-bottom : 10px;
 `;
 
 const CardWrapper = styled.div`
