@@ -51,9 +51,9 @@
 
 🔹 Frontend 실행
 
-cd AI-eng-work-assistant-front
-npm install
-npm start
+cd AI-eng-work-assistant-front</br>
+npm install</br>
+npm start</br>
 
 ✅ Frontend는 React 기반으로 실행
 
