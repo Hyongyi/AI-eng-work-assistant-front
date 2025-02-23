@@ -51,10 +51,16 @@
 
 🔹 Frontend 실행
 
-cd AI-eng-work-assistant-front</br>
-npm install</br>
-npm start</br>
+```
+//폴더로 이동
+cd AI-eng-work-assistant-front
 
+//관련 라이브러리 설치
+npm install
+
+//기동
+npm start
+```
 ✅ Frontend는 React 기반으로 실행
 
 ✅ npm start 실행 후 http://localhost:3000에서 접속 가능
