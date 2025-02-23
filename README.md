@@ -1,6 +1,6 @@
 ## **📝 프로젝트 개요**
 
-![image.png](attachment:0b42a8c9-defb-4548-a7ec-c17117565768:image.png)
+![image](https://github.com/user-attachments/assets/f0b0dc04-7fea-4941-aed8-302d24ada384)
 
 **📌 프로젝트명**: AI 영어 업무 도우미
 
@@ -12,7 +12,8 @@
 
 **📌 주요 기능**:
 
-![image.png](attachment:b8b5368f-39bb-414a-a086-71221f4db282:image.png)
+![Uploading image (1).png…]()
+
 
 ✔ **영문 번역** - 사용자가 입력한 문장을 AI가 자연스럽게 번역
 
