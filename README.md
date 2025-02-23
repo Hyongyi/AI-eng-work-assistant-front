@@ -47,6 +47,19 @@
 - **SqlLite**
 
 ---
+⚡ 기동 방법
+
+🔹 Frontend 실행
+
+cd AI-eng-work-assistant-front
+npm install
+npm start
+
+✅ Frontend는 React 기반으로 실행
+
+✅ npm start 실행 후 http://localhost:3000에서 접속 가능
+
+✅ 정상 작동을 위해서는 AI-eng-work-assistant-back 기동 필요
 
 ## **📅 프로젝트 일정**
 
