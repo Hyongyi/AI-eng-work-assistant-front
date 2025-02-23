@@ -12,7 +12,7 @@
 
 **📌 주요 기능**:
 
-![Uploading image (1).png…]()
+![image (1)](https://github.com/user-attachments/assets/1bcaa51b-adff-49c5-a572-c186c270244d)
 
 
 ✔ **영문 번역** - 사용자가 입력한 문장을 AI가 자연스럽게 번역
